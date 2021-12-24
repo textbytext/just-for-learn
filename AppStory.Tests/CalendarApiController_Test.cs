@@ -1,4 +1,5 @@
-﻿using AppStory.Calendar;
+﻿using AppStory.Authorizations;
+using AppStory.Calendar;
 using AppStory.DataBase;
 using AppStory.Features.Products;
 using MediatR;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -36,6 +38,7 @@ namespace AppStory.Tests
 			services.AddMediatR(typeof(CalendarApiController).Assembly);
 			services.AddScoped<CalendarApiController>();
 			services.AddScoped<ProductsApiController>();
+			services.AddSingleton<AuthService>();
 			services.AddScoped<IHttpContextAccessor, HttpContextAccessor>(sp =>
 			{
 				return new HttpContextAccessor
@@ -108,7 +111,19 @@ namespace AppStory.Tests
 		[Fact]
 		public async Task GetAllProducts()
 		{
+			var dto = new JwtDto
+			{
+				Roles = new string[] { "Customer" },
+			};
+			var identity = new ClaimsIdentity(dto.Roles
+						.Select(role => new Claim(ClaimTypes.Role, role))
+						.ToArray());
+
+			var context = this.GetService<IHttpContextAccessor>();
+			context.HttpContext.User = new ClaimsPrincipal(identity);
+
 			var controller = this.GetService<ProductsApiController>();
+
 			var products = await controller.GetAllProducts();
 			var result = (products as OkObjectResult).Value as GetAllProducts.Result;
 			Assert.True(result.Products.Length > 0);
