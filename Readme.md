@@ -1,3 +1,7 @@
+## 24 Dec 2021
++ Authorization
++ JWT
+
 ## 13 Dec 2021
 + DbContext
 + Db test

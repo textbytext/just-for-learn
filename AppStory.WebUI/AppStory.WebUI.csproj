@@ -6,11 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Orders\Actions\" />
+    <Compile Remove="Features\Orders\**" />
+    <Content Remove="Features\Orders\**" />
+    <EmbeddedResource Remove="Features\Orders\**" />
+    <None Remove="Features\Orders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="JWT" Version="8.7.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
