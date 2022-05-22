@@ -1,0 +1,20 @@
+version: '3.4'
+
+services: 
+
+  front:
+    image: appstory-front
+    build:
+      context: AppStory.WebUI
+      dockerfile: Dockerfile
+    environment: 
+      - keycloakUrl=http://keycloak
+    ports:
+      - "9080:80"
+    depends_on: 
+      - keycloak
+
+  keycloak:
+    image: keycloak-with-admin
+    ports:
+      - "9090:8080"

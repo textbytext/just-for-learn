@@ -56,7 +56,7 @@ namespace AppStory.Tests
 			services.AddDbContext<StoryDbContext>(option =>
 			{
 				//option.UseInMemoryDatabase(Guid.NewGuid().ToString());
-				option.UseSqlServer(Configuration.GetConnectionString(nameof(StoryDbContext)));
+				option.UseSqlite(Configuration.GetConnectionString(nameof(StoryDbContext)));
 			});
 			services.AddScoped<IOrdersDbContext>(sp => sp.GetService<StoryDbContext>());
 			services.AddScoped<IProductsDbContext>(sp => sp.GetService<StoryDbContext>());

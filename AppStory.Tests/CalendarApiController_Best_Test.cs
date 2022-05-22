@@ -50,8 +50,8 @@ namespace AppStory.Tests
             });
 
             var client = _factory.CreateClient();
-            client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + jwt);
-            var url = "/api/products";
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Bearer {jwt}");
+            const string url = "/api/products";
 
             var response = await client.GetAsync(url);
 
@@ -68,8 +68,8 @@ namespace AppStory.Tests
             });
 
             var client = _factory.CreateClient();
-            client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + jwt);
-            var url = "/api/products";
+            client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Bearer {jwt}");
+            const string url = "/api/products";
 
             var response = await client.GetAsync(url);
 

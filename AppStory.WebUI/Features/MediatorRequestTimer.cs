@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace AppStory
 {
-    public class MediatorRequestTimer<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+	public class MediatorRequestTimer<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
         private readonly MediatrRequestTimerInfo _mediatrRequestTimerInfo;
         private readonly ILogger _logger;

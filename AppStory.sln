@@ -1,16 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31613.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppStory.WebUI", "AppStory.WebUI\AppStory.WebUI.csproj", "{A276557D-A3E8-4E9B-AE44-BCF9BCEB306F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55E7551D-3C72-4787-A1A9-AB043E5214B0}"
 	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppStory.Tests", "AppStory.Tests\AppStory.Tests.csproj", "{CDAB701E-7D19-4D80-BB77-6B3902AD656C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppStory.Tests", "AppStory.Tests\AppStory.Tests.csproj", "{CDAB701E-7D19-4D80-BB77-6B3902AD656C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppStory.Infrastructure", "AppStory.Infrastructure\AppStory.Infrastructure.csproj", "{87825C23-740E-4DAA-849B-9FA6EE70E7D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +29,10 @@ Global
 		{CDAB701E-7D19-4D80-BB77-6B3902AD656C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDAB701E-7D19-4D80-BB77-6B3902AD656C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDAB701E-7D19-4D80-BB77-6B3902AD656C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87825C23-740E-4DAA-849B-9FA6EE70E7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87825C23-740E-4DAA-849B-9FA6EE70E7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87825C23-740E-4DAA-849B-9FA6EE70E7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87825C23-740E-4DAA-849B-9FA6EE70E7D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

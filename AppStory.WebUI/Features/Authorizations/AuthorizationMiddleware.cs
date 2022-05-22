@@ -31,7 +31,7 @@ namespace AppStory.Authorizations
 		{
 			var authorization = context.Request.Headers[HeaderNames.Authorization];
 
-			_logger.LogDebug(authorization);
+			_logger.LogDebug(HeaderNames.Authorization + " header: " + authorization);
 
 			if (authorization.Count > 0)
 			{
@@ -51,6 +51,8 @@ namespace AppStory.Authorizations
 					_logger.LogDebug("User Authorized!");
 				}
 			}
+
+			_logger.LogDebug("next ...");
 
 			await _next(context);
 		}
