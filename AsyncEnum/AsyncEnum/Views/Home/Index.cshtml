@@ -1,0 +1,117 @@
+﻿@{
+	ViewData["Title"] = "IAsyncEnumerable";
+}
+
+<template id="app_template">
+	<div class="m-2">
+		<button class="btn btn-primary" v-on:click="onProcessClick()">Run</button>
+	</div>
+	<div v-if="states.length > 0">
+		<table class="table table-sm">
+			<thead>
+				<tr>
+					<td>id</td>
+					<td>message</td>
+					<td>time</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="state in  states">
+					<td>{{state.id}}</td>
+					<td>{{state.message}}</td>
+					<td>{{state.time}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</template>
+
+<div id="app">
+</div>
+
+<script>
+	const baseApiUrl = '@Url.Content("~/api/order")';
+
+	const extractJson = function(json){
+		var begin = -1;
+
+		for(var i = 0; i < json.length; i++){
+			const ch = json[i];
+
+			if (ch === '{' && begin < 0){
+				begin = i;
+			}
+
+			else if (ch === '}'){
+				var sub = json.substring(begin, i + 1);
+
+				//console.debug('sub: ' + sub);
+
+				try {
+					const result = JSON.parse(sub);
+					return {
+						value: result,
+						end: i + 1,
+						start: begin,
+					};
+				}
+				catch {
+				}
+			}
+		}
+
+		return null;
+	}
+
+	const options = {
+		template: '#app_template',
+		data: function () {
+			return {
+				userGuest: true,
+				modeRegistration: false,
+				states: []
+			}
+		},
+		methods: {
+			onProcessClick: function(){
+				const url = `${baseApiUrl}/create`;
+
+				const config = {
+					method: 'POST',
+				};
+
+				const self = this;
+
+				var buffer = '';
+				const processData = (reader) => {
+					reader.read()
+					.then(({value, done}) => {
+						buffer += String.fromCharCode.apply(null, value);
+
+						const json = extractJson(buffer);
+						if (json){
+							buffer = buffer.substring(json.end);
+							console.log(json.value);
+							self.states.push(json.value);
+						}
+
+						if (!done) {
+							processData(reader)
+						}
+					});
+					return null;
+				}
+
+				fetch(url, config)
+					.then(res => res.body.getReader())
+					.then(reader => processData(reader));
+			}
+		},
+		mounted: async function(){
+		}
+	};
+
+	const app = Vue.createApp(options)
+	app.mount('#app');
+</script>
