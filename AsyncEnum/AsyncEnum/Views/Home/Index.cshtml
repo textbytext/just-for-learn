@@ -3,9 +3,11 @@
 }
 
 <template id="app_template">
-	<div class="m-2">
-		<button class="btn btn-primary" v-on:click="onProcessClick()">Run</button>
-	</div>
+    <div class="m-2">
+        <button class="btn btn-primary" v-on:click="onProcessClassicClick()">Run classic</button>
+
+        <button class="btn btn-primary" v-on:click="onProcessStreamClick()">Run stream</button>
+    </div>
 	<div v-if="states.length > 0">
 		<table class="table table-sm">
 			<thead>
@@ -43,7 +45,7 @@
 				begin = i;
 			}
 
-			else if (ch === '}'){
+            else if (ch === '}' && begin >= 0){
 				var sub = json.substring(begin, i + 1);
 
 				//console.debug('sub: ' + sub);
@@ -74,7 +76,7 @@
 			}
 		},
 		methods: {
-			onProcessClick: function(){
+			onProcessStreamClick: function(){
 				const url = `${baseApiUrl}/create`;
 
 				const config = {
@@ -106,7 +108,23 @@
 				fetch(url, config)
 					.then(res => res.body.getReader())
 					.then(reader => processData(reader));
-			}
+			},
+
+            onProcessClassicClick: function () {
+                const url = `${baseApiUrl}/create`;
+
+                const config = {
+                    method: 'POST',
+                };
+
+                const self = this;
+
+                fetch(url, config)
+                    .then(res => res.json())
+					.then(orders => {
+						self.states = [...self.states, ...orders];
+					});
+            }
 		},
 		mounted: async function(){
 		}
