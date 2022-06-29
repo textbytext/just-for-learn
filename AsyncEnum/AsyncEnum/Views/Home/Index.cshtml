@@ -87,8 +87,12 @@
 
 				var buffer = '';
 				const processData = (reader) => {
+					console.debug('const processData = (reader) => {');
+
 					reader.read()
-					.then(({value, done}) => {
+						.then(({ value, done }) => {
+                            console.debug('.then(({ value, done }) => {');
+
 						buffer += String.fromCharCode.apply(null, value);
 
 						const json = extractJson(buffer);
@@ -122,6 +126,7 @@
                 fetch(url, config)
                     .then(res => res.json())
 					.then(orders => {
+						console.debug(orders);
 						self.states = [...self.states, ...orders];
 					});
             }
@@ -130,6 +135,6 @@
 		}
 	};
 
-	const app = Vue.createApp(options)
+	const app = Vue.createApp(options);
 	app.mount('#app');
 </script>
