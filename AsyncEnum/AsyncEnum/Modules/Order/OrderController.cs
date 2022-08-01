@@ -1,5 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AsyncEnum.Order
 {
@@ -8,7 +11,18 @@ namespace AsyncEnum.Order
 	public class OrderController : ControllerBase
 	{
 		[HttpPost("create")]
-		public async IAsyncEnumerable<OrderStateDto> CreateOrder()
+		public IAsyncEnumerable<OrderStateDto> PostCreateOrder()
+		{
+			return ProcessOrder();
+		}
+
+		[HttpGet("create")]
+		public IAsyncEnumerable<OrderStateDto> GetCreateOrder()
+		{
+			return ProcessOrder();
+		}
+
+		private async IAsyncEnumerable<OrderStateDto> ProcessOrder()
 		{
 			var orderState = new OrderStateDto
 			{
@@ -26,7 +40,7 @@ namespace AsyncEnum.Order
 			yield return orderState;
 
 			await Task.Delay(2000);
-			orderState.Message = $"Order sending!";
+			orderState.Message = $"Order sending ...";
 			orderState.Time = DateTime.Now;
 			yield return orderState;
 

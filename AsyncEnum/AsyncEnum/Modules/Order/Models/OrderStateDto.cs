@@ -1,4 +1,6 @@
-﻿namespace AsyncEnum.Order
+﻿using System;
+
+namespace AsyncEnum.Order
 {
 	public class OrderStateDto
 	{
