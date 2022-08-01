@@ -72,7 +72,11 @@ Body: {body}");
 		await processor.StartProcessingAsync(cancelationToken.Token);
 	}
 
-	await processor.StopProcessingAsync();
+	if (processor.IsProcessing)
+	{
+		await processor.StopProcessingAsync();
+	}
+	
 	await processor.DisposeAsync();
 });
 
