@@ -3,6 +3,11 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using System.Text.Json;
 
+/*
+ * Get started with Azure Service Bus queues (.NET)
+ * https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues
+ */
+
 var cancelationToken = new CancellationTokenSource();
 
 var configuration = new ConfigurationBuilder()
@@ -39,7 +44,7 @@ var writer = Task.Run(async () =>
 		
 		Console.WriteLine($"Message {data.Name} was send");
 
-		await Task.Delay(1000);
+		await Task.Delay(100);
 	}
 
 	await sender.DisposeAsync();
@@ -66,17 +71,15 @@ Body: {body}");
 		return Task.CompletedTask;
 	};
 
+	Console.WriteLine("StartProcessingAsync ...");
+	await processor.StartProcessingAsync(cancelationToken.Token);
+
 	while (!cancelationToken.Token.IsCancellationRequested)
 	{
-		Console.WriteLine("StartProcessingAsync ...");
-		await processor.StartProcessingAsync(cancelationToken.Token);
+		await Task.Delay(100);
 	}
 
-	if (processor.IsProcessing)
-	{
-		await processor.StopProcessingAsync();
-	}
-	
+	await processor.StopProcessingAsync();	
 	await processor.DisposeAsync();
 });
 
